@@ -1,6 +1,7 @@
 use std::io;
 use std::cmp::Ordering;
 use rand::Rng;
+use colored::*;
 
 //mod hey;
 
@@ -26,7 +27,7 @@ fn main() {
 
 	//hey::run();
 
-	println!("Guess the number!\n(To quit, enter a non-number into the guess and the program will crash)");
+	println!("\n\n\n{}{}", "Guess the number!".bright_yellow().bold(), "\n(To quit, enter a non-number into the guess and the program will crash)".bright_red());
 	let secret_number = rand::thread_rng().gen_range(1, 101);
 	let mut attempts = 1;
 	//println!("The secret number is {}", secret_number);
@@ -41,8 +42,8 @@ fn main() {
 		//println!("You guessed: {}", guess);
 
 		match guess.cmp(&secret_number) {
-			Ordering::Less => println!("Too small!"),
-			Ordering::Greater => println!("Too big!"),
+			Ordering::Less => println!("{}", "Too small!".bright_cyan()),
+			Ordering::Greater => println!("{}", "Too big!".bright_cyan()),
 			Ordering::Equal => {
 				println!("You got it! It took you {} attempts.", attempts);
 				break;
