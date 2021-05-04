@@ -27,19 +27,26 @@ fn main() {
 
 	//hey::run();
 
-	println!("\n\n\n{}{}", "Guess the number!".bright_yellow().bold(), "\n(To quit, enter a non-number into the guess and the program will crash)".bright_red());
+	println!("\n\n\n{}{}", "Guess the number!".bright_yellow().bold(), "\n(To quit, press ctrl+c)".bright_red());
 	let secret_number = rand::thread_rng().gen_range(1, 101);
 	let mut attempts = 1;
 	//println!("The secret number is {}", secret_number);
-	println!("Please input your guess.");
+	println!("Please input your guess:");
 
 	loop {
 		let mut guess = String::new();
 		io::stdin()
 			.read_line(&mut guess)
 			.expect("Failed to read line");
-		let guess: u32 = guess.trim().parse().expect("Program crash, please input a number");
+		let guess: u32 = match guess.trim().parse() {
+			Ok(num) => num,
+			Err(_) => {
+				println!("Please input a valid number!");
+				continue;
+			}
+		}; //.expect("Program crash, please input a number");
 		//println!("You guessed: {}", guess);
+
 
 		match guess.cmp(&secret_number) {
 			Ordering::Less => println!("{}", "Too small!".bright_cyan()),
